@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr.berg IN </title>
+    <link rel="icon" type="image/png" href="drberg.png">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .logo {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+        .question-box {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+        .question {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #promoBox {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ffcc00;
+            color: #333;
+            font-weight: bold;
+            display: none;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="logo-4.svg" alt="Logo" class="logo">
+        <h1>Answer These Fitness Questions</h1>
+        <div id="quiz"></div>
+        <button onclick="checkAnswers()">Submit</button>
+        <div id="promoBox" class="hidden">🎉 Congrats! Use Promo Code: <strong>DISCOUNT20</strong></div>
+        <div class="footer">
+            <p>We are the only authorized reseller of Dr. Berg products in India.</p>
+            <p>Visit us at <a href="https://www.drberg.in" target="_blank">www.drberg.in</a></p>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Drinking water helps boost metabolism.", a: true },
+            { q: "Cardio is the only way to lose fat.", a: false },
+            { q: "Strength training burns calories even at rest.", a: true },
+            { q: "Skipping meals is a good way to lose weight.", a: false },
+            { q: "A healthy diet is just as important as exercise.", a: true },
+            { q: "Weightlifting makes women bulky.", a: false },
+            { q: "Running daily is bad for your knees.", a: false },
+            { q: "Protein is essential for muscle repair.", a: true },
+            { q: "Drinking green tea can help with weight loss.", a: true },
+            { q: "More sweat means more fat loss.", a: false },
+            { q: "Eating late at night leads to weight gain.", a: false },
+            { q: "Crunches are the best way to lose belly fat.", a: false },
+            { q: "Hydration improves physical performance.", a: true },
+            { q: "Eating more protein helps build muscle.", a: true },
+            { q: "Rest days are necessary for muscle recovery.", a: true },
+            { q: "Stretching before exercise prevents all injuries.", a: false },
+            { q: "Fasted cardio burns more fat.", a: false },
+            { q: "BMI is the best indicator of health.", a: false },
+            { q: "Post-workout meals are important for recovery.", a: true },
+            { q: "Strength training is only for young people.", a: false },
+            { q: "Supplements can replace a healthy diet.", a: false },
+            { q: "Walking 10,000 steps a day improves health.", a: true },
+            { q: "Yoga improves flexibility and strength.", a: true },
+            { q: "HIIT workouts burn more calories in less time.", a: true },
+            { q: "Carbs should always be avoided.", a: false },
+            { q: "Too much exercise can be harmful.", a: true },
+            { q: "Lifting heavier weights always leads to more muscle.", a: false },
+            { q: "Drinking coffee before a workout boosts performance.", a: true },
+            { q: "Mental health benefits from regular exercise.", a: true }
+        ];
+        
+        function getRandomQuestions() {
+            let shuffled = questions.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 3);
+        }
+        
+        function loadQuiz() {
+            const quizDiv = document.getElementById("quiz");
+            quizDiv.innerHTML = "";
+            
+            const selectedQuestions = getRandomQuestions();
+            selectedQuestions.forEach((item, index) => {
+                quizDiv.innerHTML += `
+                    <div class="question-box">
+                        <p class="question">${item.q}</p>
+                        <label><input type="radio" name="q${index}" value="true"> True</label>
+                        <label><input type="radio" name="q${index}" value="false"> False</label>
+                    </div>
+                `;
+            });
+        }
+        
+        function checkAnswers() {
+            const selectedQuestions = document.querySelectorAll(".question-box");
+            let correctCount = 0;
+            
+            selectedQuestions.forEach((questionDiv, index) => {
+                const inputs = questionDiv.querySelectorAll("input[type='radio']");
+                let selectedAnswer = null;
+                
+                inputs.forEach(input => {
+                    if (input.checked) selectedAnswer = input.value === "true";
+                });
+                
+                if (selectedAnswer === questions.find(q => q.q === questionDiv.querySelector(".question").innerText).a) {
+                    correctCount++;
+                }
+            });
+            
+            if (correctCount === 3) {
+                document.getElementById("promoBox").style.display = "block";
+            } else {
+                alert("You need to answer all correctly to get the promo code!");
+            }
+        }
+        
+        window.onload = loadQuiz;
+    </script>
+</body>
+</html>
