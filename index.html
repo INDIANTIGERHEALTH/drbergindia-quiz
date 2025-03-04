@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr.berg IN </title>
+    <title>Dr. Berg IN</title>
     <link rel="icon" type="image/png" href="drberg.png">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
             background-color: #f4f4f4;
             color: #333;
@@ -78,10 +78,13 @@
 <body>
     <div class="container">
         <img src="logo-4.svg" alt="Logo" class="logo">
-        <h1>Answer These Fitness Questions</h1>
+        <h1>Answer These Questions About Dr. Berg's Products</h1>
         <div id="quiz"></div>
         <button onclick="checkAnswers()">Submit</button>
-        <div id="promoBox" class="hidden">🎉 Congrats! Use Promo Code: <strong>DISCOUNT20</strong></div>
+        <div id="promoBox">
+            🎉 Congrats! Use Promo Code: <strong id="promoCode">QEN86LBV</strong>
+            <button onclick="copyPromoCode()">Copy Code</button>
+        </div>
         <div class="footer">
             <p>We are the only authorized reseller of Dr. Berg products in India.</p>
             <p>Visit us at <a href="https://www.drberg.in" target="_blank">www.drberg.in</a></p>
@@ -90,35 +93,20 @@
 
     <script>
         const questions = [
-            { q: "Drinking water helps boost metabolism.", a: true },
-            { q: "Cardio is the only way to lose fat.", a: false },
-            { q: "Strength training burns calories even at rest.", a: true },
-            { q: "Skipping meals is a good way to lose weight.", a: false },
-            { q: "A healthy diet is just as important as exercise.", a: true },
-            { q: "Weightlifting makes women bulky.", a: false },
-            { q: "Running daily is bad for your knees.", a: false },
-            { q: "Protein is essential for muscle repair.", a: true },
-            { q: "Drinking green tea can help with weight loss.", a: true },
-            { q: "More sweat means more fat loss.", a: false },
-            { q: "Eating late at night leads to weight gain.", a: false },
-            { q: "Crunches are the best way to lose belly fat.", a: false },
-            { q: "Hydration improves physical performance.", a: true },
-            { q: "Eating more protein helps build muscle.", a: true },
-            { q: "Rest days are necessary for muscle recovery.", a: true },
-            { q: "Stretching before exercise prevents all injuries.", a: false },
-            { q: "Fasted cardio burns more fat.", a: false },
-            { q: "BMI is the best indicator of health.", a: false },
-            { q: "Post-workout meals are important for recovery.", a: true },
-            { q: "Strength training is only for young people.", a: false },
-            { q: "Supplements can replace a healthy diet.", a: false },
-            { q: "Walking 10,000 steps a day improves health.", a: true },
-            { q: "Yoga improves flexibility and strength.", a: true },
-            { q: "HIIT workouts burn more calories in less time.", a: true },
-            { q: "Carbs should always be avoided.", a: false },
-            { q: "Too much exercise can be harmful.", a: true },
-            { q: "Lifting heavier weights always leads to more muscle.", a: false },
-            { q: "Drinking coffee before a workout boosts performance.", a: true },
-            { q: "Mental health benefits from regular exercise.", a: true }
+            { q: "Dr. Berg's Whole Food Multivitamin is made from real food sources.", a: true },
+            { q: "Electrolyte Powder helps with hydration and energy.", a: true },
+            { q: "Dr. Berg’s products are only for athletes.", a: false },
+            { q: "The Keto Energy supplement helps with energy and metabolism.", a: true },
+            { q: "Nutritional Yeast Tablets are a great source of B vitamins.", a: true },
+            { q: "Dr. Berg’s Sleep Aid formula contains melatonin.", a: false },
+            { q: "Vitamin D3 & K2 is important for bone health.", a: true },
+            { q: "Electrolyte Capsules contain only potassium.", a: false },
+            { q: "Advanced Digestive Enzymes support digestion and gut health.", a: true },
+            { q: "Dr. Berg's products contain artificial sweeteners.", a: false },
+            { q: "Dr. Berg's Hair Formula helps promote healthy hair growth.", a: true },
+            { q: "Wheatgrass Juice Powder is packed with nutrients.", a: true },
+            { q: "Drinking ACV (Apple Cider Vinegar) can support digestion.", a: true },
+            { q: "Dr. Berg's products are made for both men and women.", a: true }
         ];
         
         function getRandomQuestions() {
@@ -162,8 +150,17 @@
             if (correctCount === 3) {
                 document.getElementById("promoBox").style.display = "block";
             } else {
-                alert("You need to answer all correctly to get the promo code!");
+                alert("You need to answer all questions correctly to get the promo code!");
             }
+        }
+        
+        function copyPromoCode() {
+            const promoCode = document.getElementById("promoCode").innerText;
+            navigator.clipboard.writeText(promoCode).then(() => {
+                alert("Promo code copied to clipboard!");
+            }, () => {
+                alert("Failed to copy promo code.");
+            });
         }
         
         window.onload = loadQuiz;
